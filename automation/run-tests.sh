@@ -59,6 +59,10 @@ function exec_cmd {
     fi
 }
 
+function dnf_prepare {
+    exec_cmd "dnf clean all && dnf makecache"
+}
+
 function install_nmstate {
     if [ $INSTALL_NMSTATE == "true" ];then
         if [ -n "$COMPILED_RPMS_DIR" ];then
@@ -349,17 +353,21 @@ if [ $TEST_TYPE != $TEST_TYPE_ALL ] && \
     modprobe_ovs
 fi
 
+
 if [ -n "${RUN_BAREMETAL}" ];then
     CONTAINER_WORKSPACE="."
+    dnf_prepare
     run_customize_command
     start_machine_services
 elif [ -n "${RUN_K8S}" ]; then
     export CONTAINER_CMD=docker
     k8s::start_cluster
     k8s::pre_test_setup
+    dnf_prepare
     run_customize_command
 else
     container_pre_test_setup
+    dnf_prepare
     run_customize_command
 fi
 
