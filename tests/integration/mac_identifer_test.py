@@ -54,6 +54,9 @@ def clean_up():
             - name: mtap0
               type: mac-vtap
               state: absent
+            - name: mtap0
+              type: mac-vlan
+              state: absent
             - name: macsec0
               type: macsec
               state: absent
