@@ -330,17 +330,10 @@ class TestSrIov:
                 {
                     Interface.KEY: [
                         {
-                            Interface.NAME: expected_state[Interface.KEY][0][
-                                Interface.NAME
-                            ],
+                            Interface.NAME: iface[Interface.NAME],
                             Interface.STATE: InterfaceState.ABSENT,
-                        },
-                        {
-                            Interface.NAME: expected_state[Interface.KEY][0][
-                                Interface.NAME
-                            ],
-                            Interface.STATE: InterfaceState.ABSENT,
-                        },
+                        }
+                        for iface in expected_state[Interface.KEY]
                     ]
                 }
             )
